@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: postgres-db-red-postmen
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: caribou
+      POSTGRES_PASSWORD: freeTheCaribou
+      POSTGRES_DB: red-postmen
+    ports:
+      - "1871:1871"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
