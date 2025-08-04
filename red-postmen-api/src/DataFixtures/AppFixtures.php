@@ -3,11 +3,21 @@
 namespace App\DataFixtures;
 
 use App\Entity\Area;
+use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
+
+    private UserPasswordHasherInterface $passwordHasher;
+
+    public function __construct(UserPasswordHasherInterface $passwordHasher)
+    {
+        $this->passwordHasher = $passwordHasher;
+    }
+
     public function load(ObjectManager $manager): void
     {
         $areaSamyHouse = new Area();
@@ -28,6 +38,14 @@ class AppFixtures extends Fixture
             ['lat' => '52.399528994928104', 'lng' => '13.033762668723774'],
         ]);
         $manager->persist($areaFredHouse);
+
+        $userSamy = new User();
+        $userSamy->setEmail('samy@caribou.eu');
+        $userSamy->setRoles(['ROLE_ADMIN']);
+        $userSamy->setUsername('samynou');
+        $hashedPassword = $this->passwordHasher->hashPassword($userSamy, 'plainpassword');
+        $userSamy->setPassword($hashedPassword);
+        $manager->persist($userSamy);
 
         $manager->flush();
     }

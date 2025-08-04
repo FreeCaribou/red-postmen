@@ -15,21 +15,21 @@ use Symfony\Component\Serializer\SerializerInterface;
 class AreaController extends AbstractController
 {
 
-    #[Route('/areas', name: 'get_all_areas', methods: ['GET'])]
+    #[Route('/api/areas', name: 'get_all_areas', methods: ['GET'])]
     public function getAllAreas(AreaRepository $repository): JsonResponse
     {
         $areas = $repository->findAll();
         return $this->json($areas);
     }
 
-    #[Route('/areas/{id}', name: 'get_area_by_id', methods: ['GET'])]
+    #[Route('/api/areas/{id}', name: 'get_area_by_id', methods: ['GET'])]
     public function getAreaById(string $id, AreaRepository $repository): JsonResponse
     {
         $area = $repository->find($id);
         return $this->json($area);
     }
 
-    #[Route('/areas', name: 'create_area', methods: ['POST'])]
+    #[Route('/api/areas', name: 'create_area', methods: ['POST'])]
     public function createOneArea(Request $request, SerializerInterface $serializer, EntityManagerInterface $entityManager): JsonResponse
     {
         if ('json' !== $request->getContentTypeFormat()) {
