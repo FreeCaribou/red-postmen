@@ -8,9 +8,18 @@ use Symfony\Component\Routing\Attribute\Route;
 use App\Entity\User;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Component\HttpFoundation\Response;
+use App\Service\JwtService;
 
 final class ApiLoginController extends AbstractController
 {
+
+    private JwtService $jwtService;
+
+    public function __construct(JwtService $jwtService)
+    {
+        $this->jwtService = $jwtService;
+    }
+
     #[Route('/api/login', name: 'api_login', methods: ['POST'])]
     public function index(#[CurrentUser] ?User $user): JsonResponse
     {
@@ -20,7 +29,7 @@ final class ApiLoginController extends AbstractController
             ], Response::HTTP_UNAUTHORIZED);
         }
 
-        $token = "tmp";
+        $token = $this->jwtService->signToken($user);
 
         return $this->json([
             'user' => $user->getUserIdentifier(),

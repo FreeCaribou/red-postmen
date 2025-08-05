@@ -8,14 +8,9 @@ services:
       POSTGRES_PASSWORD: freeTheCaribou
       POSTGRES_DB: red-postmen
     ports:
-      - "1871:1871"
+      - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD", "pg_isready", "-d", "red-postmen", "-U", "red-postmen"]
-      timeout: 5s
-      retries: 5
-      start_period: 60s
 
 volumes:
   pgdata:

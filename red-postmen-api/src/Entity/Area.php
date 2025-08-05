@@ -53,7 +53,7 @@ class Area
 
     public function getDelimitation(): ?array
     {
-        return $this->delimitation;
+        return $this->delimitation ?? [];
     }
 
     public function setDelimitation(?array $delimitation): static

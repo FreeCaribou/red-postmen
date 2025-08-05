@@ -11,12 +11,13 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 use Symfony\Component\Serializer\SerializerInterface;
+use App\Service\JwtService;
 
 class AreaController extends AbstractController
 {
 
     #[Route('/api/areas', name: 'get_all_areas', methods: ['GET'])]
-    public function getAllAreas(AreaRepository $repository): JsonResponse
+    public function getAllAreas(AreaRepository $repository, Request $request): JsonResponse
     {
         $areas = $repository->findAll();
         return $this->json($areas);
