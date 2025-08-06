@@ -100,6 +100,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
+     * Used when we will expose an user and so we don't want to show the password
+     */
+    public function unsetPassword()
+    {
+        unset($this->password);
+    }
+
+    /**
      * Ensure the session doesn't contain actual password hashes by CRC32C-hashing them, as supported since Symfony 7.3.
      */
     public function __serialize(): array
@@ -116,6 +124,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // @deprecated, to be removed when upgrading to Symfony 8
     }
 
+    // TODO username is useles finaly, just the mail is ok
     public function getUsername(): ?string
     {
         return $this->username;

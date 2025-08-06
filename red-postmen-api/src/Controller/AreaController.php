@@ -13,7 +13,8 @@ use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 use Symfony\Component\Serializer\SerializerInterface;
 use App\Service\JwtService;
 
-class AreaController extends AbstractController
+// TODO make a service for area
+final class AreaController extends AbstractController
 {
 
     #[Route('/api/areas', name: 'get_all_areas', methods: ['GET'])]
@@ -33,6 +34,7 @@ class AreaController extends AbstractController
     #[Route('/api/areas', name: 'create_area', methods: ['POST'])]
     public function createOneArea(Request $request, SerializerInterface $serializer, EntityManagerInterface $entityManager): JsonResponse
     {
+        // TODO verify the format of the delimitation in the json
         if ('json' !== $request->getContentTypeFormat()) {
             throw new BadRequestException('Unsupported content format');
         }

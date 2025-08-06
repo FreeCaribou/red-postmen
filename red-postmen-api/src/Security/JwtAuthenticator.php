@@ -35,6 +35,7 @@ class JwtAuthenticator
         }
 
         $data = $this->jwtService->decryptTokenRolesFromRequest($request);
+        // TODO return the user from the database, not from the payload
         $request->attributes->set('user_payload', $data);
     }
 
