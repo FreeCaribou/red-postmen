@@ -21,7 +21,7 @@ final class AreaController extends AbstractController
     public function getAllAreas(AreaRepository $repository, Request $request): JsonResponse
     {
         $areas = $repository->findAll();
-        return $this->json($areas);
+        return $this->json($areas, 200, [], ['groups' => ['area:read']]);
     }
 
     #[Route('/api/areas/{id}', name: 'get_area_by_id', methods: ['GET'])]

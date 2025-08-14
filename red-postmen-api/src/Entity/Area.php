@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\AreaRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: AreaRepository::class)]
 class Area
@@ -11,16 +12,24 @@ class Area
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['area:read'])]
     private ?int $id = null;
 
+    #[Groups(['area:read'])]
     #[ORM\Column(length: 50)]
     private ?string $label = null;
 
+    #[Groups(['area:read'])]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $description = null;
 
+    #[Groups(['area:read'])]
     #[ORM\Column(nullable: true)]
     private ?array $delimitation = null;
+
+    #[Groups(['area:read'])]
+    #[ORM\ManyToOne(targetEntity: Postman::class, inversedBy: 'areas')]
+    private ?Postman $postman = null;
 
     public function getId(): ?int
     {
@@ -59,6 +68,18 @@ class Area
     public function setDelimitation(?array $delimitation): static
     {
         $this->delimitation = $delimitation;
+
+        return $this;
+    }
+
+    public function getPostman(): ?Postman
+    {
+        return $this->postman;
+    }
+
+    public function setPostman(?Postman $postman): static
+    {
+        $this->postman = $postman;
 
         return $this;
     }

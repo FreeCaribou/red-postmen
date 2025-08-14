@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -32,8 +34,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\Column(length: 50)]
-    private ?string $username = null;
+    /**
+     * @var Collection<int, Postman>
+     */
+    #[ORM\ManyToMany(targetEntity: Postman::class, inversedBy: 'users')]
+    private Collection $postmen;
+
+    public function __construct()
+    {
+        $this->postmen = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -124,16 +134,28 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // @deprecated, to be removed when upgrading to Symfony 8
     }
 
-    // TODO username is useles finaly, just the mail is ok
-    public function getUsername(): ?string
+    /**
+     * @return Collection<int, Postman>
+     */
+    public function getPostmen(): Collection
     {
-        return $this->username;
+        return $this->postmen;
     }
 
-    public function setUsername(string $username): static
+    public function addPostman(Postman $postman): static
     {
-        $this->username = $username;
+        if (!$this->postmen->contains($postman)) {
+            $this->postmen->add($postman);
+        }
 
         return $this;
     }
+
+    public function removePostman(Postman $postman): static
+    {
+        $this->postmen->removeElement($postman);
+
+        return $this;
+    }
+
 }

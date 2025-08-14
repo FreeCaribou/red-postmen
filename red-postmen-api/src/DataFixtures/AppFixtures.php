@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Area;
 use App\Entity\User;
+use App\Entity\Postman;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -42,10 +43,18 @@ class AppFixtures extends Fixture
         $userSamy = new User();
         $userSamy->setEmail('samy@caribou.eu');
         $userSamy->setRoles(['ROLE_ADMIN']);
-        $userSamy->setUsername('samynou');
         $hashedPassword = $this->passwordHasher->hashPassword($userSamy, 'plainpassword');
         $userSamy->setPassword($hashedPassword);
         $manager->persist($userSamy);
+
+        $postmanRosa = new Postman();
+        $postmanRosa->setName('Rosa');
+        $postmanRosa->setCity('Berlin');
+        $manager->persist($postmanRosa);
+
+        $userSamy->addPostman($postmanRosa);
+        $postmanRosa->addArea($areaSamyHouse);
+        $postmanRosa->addArea($areaFredHouse);
 
         $manager->flush();
     }
