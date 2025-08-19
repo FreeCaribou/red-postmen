@@ -1,0 +1,22 @@
+<ion-content [fullscreen]="true" color="background">
+  @for (postman of postmen; track postman.id) {
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>{{postman.name}}</ion-card-title>
+      <ion-card-subtitle>{{postman.city}}</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-list>
+        <ion-list-header>
+          <ion-label>Areas</ion-label>
+        </ion-list-header>
+        @for (area of postman.areas; track area.id) {
+        <ion-item>{{area.label}}</ion-item>
+        }
+      </ion-list>
+
+    </ion-card-content>
+  </ion-card>
+  }
+</ion-content>

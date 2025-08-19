@@ -1,0 +1,17 @@
+<ion-content [fullscreen]="true" color="background">
+  <ion-list [inset]="true" [formGroup]="loginForm">
+    <ion-item>
+      <ion-input formControlName="username" label="Email"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input formControlName="password" type="password" label="Password">
+        <ion-input-password-toggle slot="end"></ion-input-password-toggle>
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-button size="default" slot="end" (click)="onLogin()" [disabled]="!loginForm.valid">
+        Login <ion-icon name="log-in" slot="end"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
+</ion-content>

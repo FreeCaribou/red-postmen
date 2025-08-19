@@ -12,18 +12,18 @@ class Area
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['area:read'])]
+    #[Groups(['area:read', 'postman:read'])]
     private ?int $id = null;
 
-    #[Groups(['area:read'])]
+    #[Groups(['area:read', 'postman:read'])]
     #[ORM\Column(length: 50)]
     private ?string $label = null;
 
-    #[Groups(['area:read'])]
+    #[Groups(['area:read', 'postman:read'])]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $description = null;
 
-    #[Groups(['area:read'])]
+    #[Groups(['area:read', 'postman:read'])]
     #[ORM\Column(nullable: true)]
     private ?array $delimitation = null;
 

@@ -56,6 +56,25 @@ class AppFixtures extends Fixture
         $postmanRosa->addArea($areaSamyHouse);
         $postmanRosa->addArea($areaFredHouse);
 
+        $postmanTito = new Postman();
+        $postmanTito->setName('Tito');
+        $postmanTito->setCity('Balkan');
+        $manager->persist($postmanTito);
+
+        $areaPartyHouse = new Area();
+        $areaPartyHouse->setLabel('Party house');
+        $areaPartyHouse->setDescription('The house to make parties');
+        $areaPartyHouse->setDelimitation([
+            ['lat' => '50.84175266545542', 'lng' => '4.342489799923105'],
+        ]);
+        $manager->persist($areaPartyHouse);
+
+        $postmanRaoul = new Postman();
+        $postmanRaoul->setName('Raoul');
+        $postmanRaoul->setCity('Brussels');
+        $postmanRaoul->addArea($areaPartyHouse);
+        $manager->persist($postmanRaoul);
+
         $manager->flush();
     }
 }
