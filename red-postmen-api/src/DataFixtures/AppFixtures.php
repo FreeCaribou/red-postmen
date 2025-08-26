@@ -26,6 +26,7 @@ class AppFixtures extends Fixture
         $areaSamyHouse->setDescription('The house of comrade Samy');
         $areaSamyHouse->setDelimitation([
             ['lat' => '66.53947037556995', 'lng' => '25.799660400712764'],
+            ['lat' => '66.53863093892838', 'lng' => '25.79491841465061']
         ]);
         $manager->persist($areaSamyHouse);
 

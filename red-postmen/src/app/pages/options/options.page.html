@@ -1,4 +1,5 @@
 <ion-content [fullscreen]="true" color="background">
+  @if (!isLogged) {
   <ion-list [inset]="true" [formGroup]="loginForm">
     <ion-item>
       <ion-input formControlName="username" label="Email"></ion-input>
@@ -14,4 +15,10 @@
       </ion-button>
     </ion-item>
   </ion-list>
+  } @else {
+  <ion-button expand="block" (click)="onLogout()">
+    Logout <ion-icon name="log-out" slot="end"></ion-icon>
+  </ion-button>
+  }
+
 </ion-content>

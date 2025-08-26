@@ -13,6 +13,7 @@
         </ion-list-header>
         @for (area of postman.areas; track area.id) {
         <ion-item>{{area.label}}</ion-item>
+        <app-map [area]="area"></app-map>
         }
       </ion-list>
 
