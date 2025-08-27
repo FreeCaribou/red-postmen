@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Dto\CreateAreaDTO;
 use App\Repository\AreaRepository;
 use App\Entity\Area;
+use App\Entity\Postman;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -40,11 +42,21 @@ final class AreaController extends AbstractController
         }
 
         $jsonData = $request->getContent();
-        $area = $serializer->deserialize($jsonData, Area::class, 'json');
+        $areaDto = $serializer->deserialize($jsonData, CreateAreaDTO::class, 'json');
+
+        $area = new Area();
+        $area->setLabel($areaDto->label);
+        $area->setDescription($areaDto->description);
+        $area->setDelimitation($areaDto->delimitation);
+
+        if (isset($areaDto->postmanId)) {
+            $postmanRef = $entityManager->getReference(Postman::class, $areaDto->postmanId);
+            $area->setPostman($postmanRef);
+        }
+
         $entityManager->persist($area);
         $entityManager->flush();
 
-        return $this->json($area);
+        return $this->json($area, 200, [], ['groups' => ['area:read']]);
     }
-
 }

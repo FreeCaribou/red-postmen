@@ -7,6 +7,7 @@
     </ion-card-header>
 
     <ion-card-content>
+      @if (postman.areas.length > 0) {
       <ion-list>
         <ion-list-header>
           <ion-label>Areas</ion-label>
@@ -16,7 +17,7 @@
         <app-map [area]="area"></app-map>
         }
       </ion-list>
-
+      }
     </ion-card-content>
   </ion-card>
   }

@@ -28,7 +28,7 @@ class Area
     private ?array $delimitation = null;
 
     #[Groups(['area:read'])]
-    #[ORM\ManyToOne(targetEntity: Postman::class, inversedBy: 'areas')]
+    #[ORM\ManyToOne(targetEntity: Postman::class, inversedBy: 'areas', cascade: ['persist'])]
     private ?Postman $postman = null;
 
     public function getId(): ?int
