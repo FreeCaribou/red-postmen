@@ -16,6 +16,8 @@ https://laravel.com/starter-kits
 
 ### PostgreSQL
 
+We need the extension postgis to manage the map and the zone
+
 ## Launch for dev
 
 Install PHP and composer

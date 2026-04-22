@@ -1,8 +1,9 @@
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/react';
-import { useEffect } from 'react';
-import L, { LatLngExpression, LatLngTuple } from 'leaflet';
+import { useEffect, useRef, useState } from 'react';
+import L, { LatLngTuple } from 'leaflet';
+import { useTranslation } from 'react-i18next';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -11,33 +12,50 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-export default function MyPostmen() {
+export default function MyPostmen({ areas = [] }: { areas: any[] }) {
+
+    const { t } = useTranslation();
+
+    const [maps, setMaps] = useState<L.Map[]>([]);
 
     useEffect(() => {
-        const map = L.map('map').setView([50.84879846958948, 4.3456910267578825], 17);
-        L.marker([50.84879846958948, 4.3456910267578825]).addTo(map);
-        const polygonCoords: LatLngTuple[] = [
-            [50.84869861829053, 4.3457505579357285],
-            [50.8479873202758, 4.345845388342124],
-            [50.848791020861405, 4.34756360986613],
-        ];
-        L.polygon(polygonCoords, {}).addTo(map);
+        maps.forEach((map) => map.remove());
+        setMaps([]);
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
+        const newMaps = areas.map((area) => {
+            // TODO calculate the middle of the map + maybe the zoom
+            const map = L.map(`map-${area.id}`).setView(
+                area?.delimitation?.coordinates[0][0],
+                17
+            );
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            }).addTo(map);
+            L.polygon(area?.delimitation?.coordinates, {
+            }).addTo(map);
+            return map;
+        }).filter(Boolean);
+        setMaps(newMaps as L.Map[]);
 
         return () => {
-            map.remove();
+            newMaps.forEach((map) => map?.remove());
         };
-    }, []);
+    }, [areas]);
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="My points" />
             <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
-                <div id="map" style={{ height: '100%', width: '100%' }}>
-                </div>
+                {areas.length === 0 ? (
+                    <p>{t('area.noZoneAvalaible')}</p>
+                ) : (
+                    areas.map((area) => (
+                        <div key={area.id} className="border rounded-lg overflow-hidden">
+                            <h3 className="p-2 text-secondary-foreground bg-secondary">{area.label}</h3>
+                            <div id={`map-${area.id}`} style={{ height: '400px', width: '100%' }} />
+                        </div>
+                    ))
+                )}
             </div>
         </AppLayout>
     );

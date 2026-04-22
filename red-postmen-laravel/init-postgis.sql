@@ -1,0 +1,4 @@
+CREATE EXTENSION IF NOT EXISTS postgis;
+
+\c redpostmen_pg
+CREATE EXTENSION IF NOT EXISTS postgis;

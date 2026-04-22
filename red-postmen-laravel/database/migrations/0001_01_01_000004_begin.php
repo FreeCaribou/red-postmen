@@ -14,6 +14,14 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->enum('role', ['admin', 'coach', 'user']);
         });
+
+        Schema::create('areas', function (Blueprint $table) {
+            $table->id();
+            $table->string('label', length: 255);
+            $table->string('description', length: 2000)->nullable();
+            $table->geometry('delimitation', subtype: 'polygon', srid: 4326)->nullable();
+            $table->timestamps();
+        });
     }
 
     /**
@@ -24,5 +32,6 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('role');
         });
+        Schema::dropIfExists('areas');
     }
 };
