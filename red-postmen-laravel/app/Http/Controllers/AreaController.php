@@ -12,6 +12,6 @@ class AreaController extends Controller
     {
         $areas = Area::get();
 
-        return Inertia::render('my-points', ['areas' => $areas]);
+        return Inertia::render('my-areas', ['areas' => $areas]);
     }
 }

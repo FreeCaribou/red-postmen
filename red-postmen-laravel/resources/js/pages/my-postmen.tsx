@@ -2,15 +2,18 @@ import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/react';
-
-const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'My Postmen',
-        href: '/my-postmen',
-    },
-];
+import { useTranslation } from 'react-i18next';
 
 export default function MyPostmen() {
+    const { t } = useTranslation();
+
+    const breadcrumbs: BreadcrumbItem[] = [
+        {
+            title: t('menu.my-postmen'),
+            href: '/my-postmen',
+        },
+    ];
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="My postmen" />

@@ -15,7 +15,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('my-postmen', function () {
         return Inertia::render('my-postmen');
     })->name('my-postmen');
-    Route::get('my-points', [AreaController::class, 'getAll'])->name('my-points');
+    Route::get('my-areas', [AreaController::class, 'getAll'])->name('my-areas');
 });
 
 require __DIR__ . '/settings.php';

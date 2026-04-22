@@ -2,19 +2,19 @@ import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/react';
 import { useEffect, useRef, useState } from 'react';
-import L, { LatLngTuple } from 'leaflet';
+import L from 'leaflet';
 import { useTranslation } from 'react-i18next';
 
-const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'My Points',
-        href: '/my-points',
-    },
-];
-
-export default function MyPostmen({ areas = [] }: { areas: any[] }) {
+export default function MyAreas({ areas = [] }: { areas: any[] }) {
 
     const { t } = useTranslation();
+
+    const breadcrumbs: BreadcrumbItem[] = [
+        {
+            title: t('menu.my-areas'),
+            href: '/my-areas',
+        },
+    ];
 
     const [maps, setMaps] = useState<L.Map[]>([]);
 

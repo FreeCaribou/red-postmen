@@ -7,34 +7,37 @@ import { Link } from '@inertiajs/react';
 import { FolderGit, LayoutGrid, Mailbox, MapPin } from 'lucide-react';
 import Footer from '@/layouts/footer';
 import AppLogoIcon from './app-logo-icon';
-
-const mainNavItems: NavItem[] = [
-    {
-        title: 'Dashboard',
-        url: '/dashboard',
-        icon: LayoutGrid,
-    },
-    {
-        title: 'My Postmen',
-        url: '/my-postmen',
-        icon: Mailbox,
-    },
-    {
-        title: 'My Points',
-        url: '/my-points',
-        icon: MapPin,
-    },
-];
-
-const footerNavItems: NavItem[] = [
-    {
-        title: 'Repository',
-        url: 'https://github.com/FreeCaribou/red-postmen',
-        icon: FolderGit,
-    },
-];
+import { useTranslation } from 'react-i18next';
 
 export function AppSidebar() {
+    const { t } = useTranslation();
+
+    const footerNavItems: NavItem[] = [
+        {
+            title: t('menu.repository'),
+            url: 'https://github.com/FreeCaribou/red-postmen',
+            icon: FolderGit,
+        },
+    ];
+
+    const mainNavItems: NavItem[] = [
+        {
+            title: t('menu.dashboard'),
+            url: '/dashboard',
+            icon: LayoutGrid,
+        },
+        {
+            title: t('menu.my-postmen'),
+            url: '/my-postmen',
+            icon: Mailbox,
+        },
+        {
+            title: t('menu.my-areas'),
+            url: '/my-areas',
+            icon: MapPin,
+        },
+    ];
+
     return (
         <Sidebar collapsible="icon" variant="inset">
             <SidebarHeader>
