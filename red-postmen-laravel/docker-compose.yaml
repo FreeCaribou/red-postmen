@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: postgres-db-redpostmen
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: redpostmen
+      POSTGRES_PASSWORD: redpostmen
+      POSTGRES_DB: redpostmen_pg
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
