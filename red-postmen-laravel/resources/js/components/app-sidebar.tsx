@@ -4,7 +4,7 @@ import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
-import { FolderGit, LayoutGrid, Mailbox, MapPin } from 'lucide-react';
+import { FolderGit, LayoutGrid, Mailbox, MapPin, MapPinPlus } from 'lucide-react';
 import Footer from '@/layouts/footer';
 import AppLogoIcon from './app-logo-icon';
 import { useTranslation } from 'react-i18next';
@@ -35,6 +35,11 @@ export function AppSidebar() {
             title: t('menu.my-areas'),
             url: '/my-areas',
             icon: MapPin,
+        },
+        {
+            title: t('menu.new-area'),
+            url: '/my-areas/new-area',
+            icon: MapPinPlus,
         },
     ];
 
