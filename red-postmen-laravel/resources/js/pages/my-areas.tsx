@@ -20,12 +20,12 @@ export default function MyAreas({ areas = [] }: { areas: any[] }) {
 
     const [maps, setMaps] = useState<L.Map[]>([]);
 
-    // TODO Type all here, make it in another function for generic
+    // TODO Type all here, make it in another function for generic, verify error, check if we can deezome if needed when big zone
     useEffect(() => {
         maps.forEach((map) => map.remove());
         setMaps([]);
 
-        const newMaps = areas.map((area) => {
+        const newMaps = areas.filter(a => a.delimitation).map((area) => {
             /**
              * To know the middle of the map, we need to make an avarage of the lat and the lng
              * But we don't take the first corner of the polygone because it will be the same as the last and will diform the middle

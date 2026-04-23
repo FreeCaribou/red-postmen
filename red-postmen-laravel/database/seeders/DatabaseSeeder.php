@@ -9,7 +9,6 @@ use Illuminate\Database\Seeder;
 use MatanYadaev\EloquentSpatial\Objects\Polygon;
 use MatanYadaev\EloquentSpatial\Objects\LineString;
 use MatanYadaev\EloquentSpatial\Enums\Srid;
-use MatanYadaev\EloquentSpatial\Objects\Point;
 use App\Support\GeoPoint;
 
 class DatabaseSeeder extends Seeder

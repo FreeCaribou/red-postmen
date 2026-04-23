@@ -28,6 +28,7 @@ class Area extends Model
     protected $fillable = [
         'label',
         'description',
+        'delimitation'
     ];
 
     protected $casts = [

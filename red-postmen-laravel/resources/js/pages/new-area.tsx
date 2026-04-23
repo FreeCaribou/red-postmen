@@ -7,13 +7,13 @@ import 'leaflet-editable';
 import 'leaflet-path-drag';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
+import axios from 'axios';
+import { router } from '@inertiajs/react';
+import { useForm } from '@inertiajs/react';
 
 export default function NewArea({ }: {}) {
 
     const { t } = useTranslation();
-
-    const mapRef = useRef<L.Map | null>(null);
-    const polygonsRef = useRef<Polygon | null>(null);
 
     const breadcrumbs: BreadcrumbItem[] = [
         {
@@ -25,6 +25,15 @@ export default function NewArea({ }: {}) {
             href: '/my-areas/new-area',
         },
     ];
+
+    const { data, setData, post, processing, errors } = useForm({
+        label: `label-test-${new Date().toString()}`,
+        description: `description-test-${new Date().toString()}`,
+        delimitation: [] as [number, number][],
+    });
+
+    const mapRef = useRef<L.Map | null>(null);
+    const polygonsRef = useRef<Polygon | null>(null);
 
     useEffect(() => {
         const baseMiddle = [50.84510438237964, 4.353180962846589]
@@ -64,8 +73,26 @@ export default function NewArea({ }: {}) {
         };
     }, []);
 
-    const onClickSave = () => {
-        console.log('param to save', polygonsRef.current?.getLatLngs())
+    // TODO Loader, err management
+    const onClickSave = async () => {
+        const rawCoords = polygonsRef.current?.getLatLngs();
+        if (!rawCoords) return;
+        const mappedCoords: [number, number][] = (rawCoords as L.LatLng[][])
+            .flat()
+            .map((point) => [point.lat, point.lng]);
+        // The polygone in DB need the same begin as end
+        mappedCoords.push(mappedCoords[0]);
+
+        router.post('/my-areas', {
+            label: `label-test-${new Date().toString()}`,
+            description: `description-test-${new Date().toString()}`,
+            delimitation: mappedCoords,
+        }, {
+            onError: (errors) => {
+                console.error('err', errors)
+
+            }
+        });
     }
 
     return (

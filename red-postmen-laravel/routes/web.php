@@ -16,6 +16,7 @@ Route::middleware(['auth'])->group(function () {
         return Inertia::render('my-postmen');
     })->name('my-postmen');
     Route::get('my-areas', [AreaController::class, 'getAll'])->name('my-areas');
+    Route::post('my-areas', [AreaController::class, 'add'])->name('add-area');
     Route::get('my-areas/new-area', function () {
         return Inertia::render('new-area');
     })->name('new-area');
