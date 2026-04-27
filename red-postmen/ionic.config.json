@@ -1,7 +1,0 @@
-{
-  "name": "red-postmen",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "angular-standalone"
-}
